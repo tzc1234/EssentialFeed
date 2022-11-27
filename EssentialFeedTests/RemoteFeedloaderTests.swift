@@ -50,7 +50,7 @@ final class RemoteFeedloaderTests: XCTestCase {
         let simples = [199, 201, 300, 400, 500]
         simples.enumerated().forEach { index, code in
             expect(sut, toCompleteWith: .failure(.invalidData)) {
-                let json = makeJSON([])
+                let json = makeItemsJSON([])
                 client.complete(withStatusCode: code, data: json, at: index)
             }
         }
@@ -69,7 +69,7 @@ final class RemoteFeedloaderTests: XCTestCase {
         let (sut, client) = makeSUT()
         
         expect(sut, toCompleteWith: .success([])) {
-            let emptyListJSON = makeJSON([])
+            let emptyListJSON = makeItemsJSON([])
             client.complete(withStatusCode: 200, data: emptyListJSON)
         }
     }
@@ -83,9 +83,23 @@ final class RemoteFeedloaderTests: XCTestCase {
         let items = [item1.model, item2.model]
         
         expect(sut, toCompleteWith: .success(items)) {
-            let json = makeJSON([item1.json, item2.json])
+            let json = makeItemsJSON([item1.json, item2.json])
             client.complete(withStatusCode: 200, data: json)
         }
+    }
+    
+    func test_load_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
+        let url = URL(string: "https://any-url.com")!
+        let client = HTTPClientSpy()
+        var sut: RemoteFeedLoader? = RemoteFeedLoader(url: url, client: client)
+        
+        var capturedResults = [RemoteFeedLoader.Result]()
+        sut?.load { capturedResults.append($0) }
+        
+        sut = nil
+        client.complete(withStatusCode: 200, data: makeItemsJSON([]))
+        
+        XCTAssertTrue(capturedResults.isEmpty)
     }
     
 }
@@ -120,7 +134,7 @@ extension RemoteFeedloaderTests {
         return (item, json)
     }
     
-    private func makeJSON(_ items: [[String: Any]]) -> Data {
+    private func makeItemsJSON(_ items: [[String: Any]]) -> Data {
         let json = ["items": items]
         return try! JSONSerialization.data(withJSONObject: json)
     }
