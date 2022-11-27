@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		BE4DC50F2933769C00A81F33 /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE4DC5062933769C00A81F33 /* EssentialFeed.framework */; };
-		BE4DC5142933769C00A81F33 /* EssentialFeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4DC5132933769C00A81F33 /* EssentialFeedTests.swift */; };
 		BE4DC51F2933772000A81F33 /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4DC51E2933772000A81F33 /* FeedItem.swift */; };
 		BE4DC52129337A7C00A81F33 /* FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4DC52029337A7C00A81F33 /* FeedLoader.swift */; };
+		BE4DC52529337D6B00A81F33 /* RemoteFeedloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4DC52429337D6B00A81F33 /* RemoteFeedloaderTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,9 +26,9 @@
 /* Begin PBXFileReference section */
 		BE4DC5062933769C00A81F33 /* EssentialFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EssentialFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE4DC50E2933769C00A81F33 /* EssentialFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BE4DC5132933769C00A81F33 /* EssentialFeedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssentialFeedTests.swift; sourceTree = "<group>"; };
 		BE4DC51E2933772000A81F33 /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
 		BE4DC52029337A7C00A81F33 /* FeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoader.swift; sourceTree = "<group>"; };
+		BE4DC52429337D6B00A81F33 /* RemoteFeedloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedloaderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +79,7 @@
 		BE4DC5122933769C00A81F33 /* EssentialFeedTests */ = {
 			isa = PBXGroup;
 			children = (
-				BE4DC5132933769C00A81F33 /* EssentialFeedTests.swift */,
+				BE4DC52429337D6B00A81F33 /* RemoteFeedloaderTests.swift */,
 			);
 			path = EssentialFeedTests;
 			sourceTree = "<group>";
@@ -158,6 +158,7 @@
 					};
 					BE4DC50D2933769C00A81F33 = {
 						CreatedOnToolsVersion = 14.1;
+						LastSwiftMigration = 1410;
 					};
 				};
 			};
@@ -211,7 +212,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE4DC5142933769C00A81F33 /* EssentialFeedTests.swift in Sources */,
+				BE4DC52529337D6B00A81F33 /* RemoteFeedloaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,14 +409,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DV4M5VPD3C;
 				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tszlung.EssentialFeedTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -424,10 +432,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DV4M5VPD3C;
 				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tszlung.EssentialFeedTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
