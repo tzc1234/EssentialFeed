@@ -59,16 +59,20 @@ extension RemoteFeedloaderTests {
     }
     
     private class HTTPClientSpy: HTTPClient {
-        private(set) var requestedURLs = [URL]()
-        private(set) var completions = [(Error) -> Void]()
+        typealias Completion = (Error) -> Void
+        
+        private(set) var message = [(url: URL, completion: Completion)]()
+        
+        var requestedURLs: [URL] {
+            message.map(\.url)
+        }
         
         func get(from url: URL, completion: @escaping (Error) -> Void) {
-            requestedURLs.append(url)
-            completions.append(completion)
+            message.append((url, completion))
         }
         
         func complete(with error: Error, at index: Int = 0) {
-            completions[index](error)
+            message[index].completion(error)
         }
     }
 }
