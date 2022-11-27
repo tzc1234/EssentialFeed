@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		BE4DC50F2933769C00A81F33 /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE4DC5062933769C00A81F33 /* EssentialFeed.framework */; };
 		BE4DC5142933769C00A81F33 /* EssentialFeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4DC5132933769C00A81F33 /* EssentialFeedTests.swift */; };
-		BE4DC5152933769C00A81F33 /* EssentialFeed.h in Headers */ = {isa = PBXBuildFile; fileRef = BE4DC5092933769C00A81F33 /* EssentialFeed.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BE4DC51F2933772000A81F33 /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4DC51E2933772000A81F33 /* FeedItem.swift */; };
 		BE4DC52129337A7C00A81F33 /* FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4DC52029337A7C00A81F33 /* FeedLoader.swift */; };
 /* End PBXBuildFile section */
@@ -26,7 +25,6 @@
 
 /* Begin PBXFileReference section */
 		BE4DC5062933769C00A81F33 /* EssentialFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EssentialFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BE4DC5092933769C00A81F33 /* EssentialFeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EssentialFeed.h; sourceTree = "<group>"; };
 		BE4DC50E2933769C00A81F33 /* EssentialFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE4DC5132933769C00A81F33 /* EssentialFeedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssentialFeedTests.swift; sourceTree = "<group>"; };
 		BE4DC51E2933772000A81F33 /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
@@ -73,7 +71,6 @@
 		BE4DC5082933769C00A81F33 /* EssentialFeed */ = {
 			isa = PBXGroup;
 			children = (
-				BE4DC5092933769C00A81F33 /* EssentialFeed.h */,
 				BE4DC52329337BC600A81F33 /* Feed Feature */,
 			);
 			path = EssentialFeed;
@@ -103,7 +100,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE4DC5152933769C00A81F33 /* EssentialFeed.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
