@@ -27,7 +27,6 @@ final class URLSessionHTTPClientTests: XCTestCase {
         URLProtocolStub.observeRequests { request in
             XCTAssertEqual(request.url, url)
             XCTAssertEqual(request.httpMethod, "GET")
-            
             exp.fulfill()
         }
         
@@ -178,8 +177,7 @@ extension URLSessionHTTPClientTests {
         }
         
         override class func canInit(with request: URLRequest) -> Bool {
-            requestObserver?(request)
-            return true
+            true
         }
         
         override class func canonicalRequest(for request: URLRequest) -> URLRequest {
@@ -187,6 +185,12 @@ extension URLSessionHTTPClientTests {
         }
         
         override func startLoading() {
+            if let requestObserver = Self.requestObserver {
+                client?.urlProtocolDidFinishLoading(self)
+                requestObserver(request)
+                return
+            }
+            
             if let data = Self.stub?.data {
                 client?.urlProtocol(self, didLoad: data)
             }
