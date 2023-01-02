@@ -92,10 +92,6 @@ extension URLSessionHTTPClientTests {
         Data("any data".utf8)
     }
     
-    private func anyNSError() -> NSError {
-        NSError(domain: "any error", code: 0)
-    }
-    
     private func anyHTTPURLResponse() -> HTTPURLResponse {
         HTTPURLResponse(url: anyURL(), statusCode: 200, httpVersion: nil, headerFields: nil)!
     }
@@ -142,10 +138,6 @@ extension URLSessionHTTPClientTests {
         
         wait(for: [exp], timeout: 1)
         return capturedResult
-    }
-    
-    private func anyURL() -> URL {
-        URL(string: "https://any-url.com")!
     }
     
     private class URLProtocolStub: URLProtocol {
