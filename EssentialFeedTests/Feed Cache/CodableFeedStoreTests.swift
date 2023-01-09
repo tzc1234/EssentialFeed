@@ -49,7 +49,7 @@ class CodableFeedStore {
         }
         
         let decoder = JSONDecoder()
-        let cache = try! decoder.decode(CodableFeedStore.Cache.self, from: data)
+        let cache = try! decoder.decode(Cache.self, from: data)
         completion(.found(feed: cache.localFeed, timestamp: cache.timestamp))
     }
     
@@ -66,13 +66,13 @@ final class CodableFeedStoreTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        try? FileManager.default.removeItem(at: testSpecificStoreURL())
+        setupEmptyStoreState()
     }
     
     override func tearDown() {
         super.tearDown()
         
-        try? FileManager.default.removeItem(at: testSpecificStoreURL())
+        undoStoreSideEffects()
     }
     
     func test_retrieve_deliversEmptyOnEmptyCache() {
@@ -138,12 +138,24 @@ final class CodableFeedStoreTests: XCTestCase {
         wait(for: [exp], timeout: 1)
     }
 
-    // MARK: - Helpers
+    // MARK: - Helpersf
     
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> CodableFeedStore {
         let sut = CodableFeedStore(storeURL: testSpecificStoreURL())
         trackForMemoryLeaks(sut, file: file, line: line)
         return sut
+    }
+    
+    private func setupEmptyStoreState() {
+        deleteStoreArtefacts()
+    }
+    
+    private func undoStoreSideEffects() {
+        deleteStoreArtefacts()
+    }
+    
+    private func deleteStoreArtefacts() {
+        try? FileManager.default.removeItem(at: testSpecificStoreURL())
     }
     
     private func testSpecificStoreURL() -> URL {
