@@ -123,6 +123,33 @@ final class CodableFeedStoreTests: XCTestCase {
         XCTAssertNotNil(deleteError, "Expect cache deletion to fail")
         expect(sut, toRetrieve: .empty)
     }
+    
+    func test_storeSideEffects_runSerially() {
+        let sut = makeSUT()
+        var completeOperationsInOrder = [XCTestExpectation]()
+        
+        let op1 = expectation(description: "Operation 1")
+        sut.insert(uniqueImageFeed().locals, timestamp: Date()) { _ in
+            completeOperationsInOrder.append(op1)
+            op1.fulfill()
+        }
+        
+        let op2 = expectation(description: "Operation 2")
+        sut.deleteCachedFeed() { _ in
+            completeOperationsInOrder.append(op2)
+            op2.fulfill()
+        }
+        
+        let op3 = expectation(description: "Operation 3")
+        sut.insert(uniqueImageFeed().locals, timestamp: Date()) { _ in
+            completeOperationsInOrder.append(op3)
+            op3.fulfill()
+        }
+        
+        waitForExpectations(timeout: 5)
+        
+        XCTAssertEqual(completeOperationsInOrder, [op1, op2, op3], "Expected side-effects to run serially but operations finished in the wrong order")
+    }
 
     // MARK: - Helpers
     
