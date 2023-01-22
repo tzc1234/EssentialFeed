@@ -136,6 +136,7 @@
 		6AE6C869297D51E100AD92AE /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
+				6AED2419296ECCB30041C8A1 /* CodableFeedStore.swift */,
 				6A0B8EC9297C903D00971AC2 /* CoreDataFeedStore.swift */,
 				6A0B8ECB297C91F400971AC2 /* FeedStore.xcdatamodeld */,
 			);
@@ -176,7 +177,6 @@
 				BE3FD129295B4C4200B39AEE /* FeedStore.swift */,
 				BE3FD12D295B58B900B39AEE /* LocalFeedImage.swift */,
 				6AD99F9F2964239500748669 /* FeedCachePolicy.swift */,
-				6AED2419296ECCB30041C8A1 /* CodableFeedStore.swift */,
 			);
 			path = FeedCache;
 			sourceTree = "<group>";
