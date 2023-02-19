@@ -159,7 +159,7 @@ extension LoadFeedFromRemoteUseCaseTests {
     }
     
     private class HTTPClientSpy: HTTPClient {
-        typealias Completion = (HTTPClientResult) -> Void
+        typealias Completion = (HTTPClient.Result) -> Void
         
         private(set) var message = [(url: URL, completion: Completion)]()
         
@@ -177,7 +177,7 @@ extension LoadFeedFromRemoteUseCaseTests {
         
         func complete(withStatusCode code: Int, data: Data, at index: Int = 0) {
             let response = HTTPURLResponse(url: requestedURLs[index], statusCode: code, httpVersion: nil, headerFields: nil)!
-            message[index].completion(.success(data, response))
+            message[index].completion(.success((data, response)))
         }
     }
 }
