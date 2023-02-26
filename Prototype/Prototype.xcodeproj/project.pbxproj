@@ -13,6 +13,7 @@
 		BEC4107A29ABF40700BEA021 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEC4107929ABF40700BEA021 /* Assets.xcassets */; };
 		BEC4107D29ABF40700BEA021 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEC4107B29ABF40700BEA021 /* LaunchScreen.storyboard */; };
 		BEC4108529ABFE0000BEA021 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC4108429ABFE0000BEA021 /* FeedViewController.swift */; };
+		BEC4108729AC00B200BEA021 /* FeedImageViewModel+PrototypeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC4108629AC00B200BEA021 /* FeedImageViewModel+PrototypeData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		BEC4107C29ABF40700BEA021 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BEC4107E29ABF40700BEA021 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEC4108429ABFE0000BEA021 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		BEC4108629AC00B200BEA021 /* FeedImageViewModel+PrototypeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedImageViewModel+PrototypeData.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				BEC4107029ABF40600BEA021 /* AppDelegate.swift */,
 				BEC4108429ABFE0000BEA021 /* FeedViewController.swift */,
+				BEC4108629AC00B200BEA021 /* FeedImageViewModel+PrototypeData.swift */,
 				BEC4107229ABF40600BEA021 /* SceneDelegate.swift */,
 				BEC4107629ABF40600BEA021 /* Main.storyboard */,
 				BEC4107929ABF40700BEA021 /* Assets.xcassets */,
@@ -141,6 +144,7 @@
 				BEC4107129ABF40600BEA021 /* AppDelegate.swift in Sources */,
 				BEC4108529ABFE0000BEA021 /* FeedViewController.swift in Sources */,
 				BEC4107329ABF40600BEA021 /* SceneDelegate.swift in Sources */,
+				BEC4108729AC00B200BEA021 /* FeedImageViewModel+PrototypeData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
