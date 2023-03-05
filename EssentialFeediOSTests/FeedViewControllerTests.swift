@@ -27,7 +27,7 @@ final class FeedViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.loadFeedCallCount, 3, "Expected a third loading request once user initiates anthoer load")
     }
     
-    func test_loadingFeedIndicator_isVisiableWhileLoadingFeed() {
+    func test_loadingFeedIndicator_isVisibleWhileLoadingFeed() {
         let (sut, loader) = makeSUT()
         
         sut.loadViewIfNeeded()
@@ -74,41 +74,64 @@ final class FeedViewControllerTests: XCTestCase {
         assertThat(sut, isRendering: [image0])
     }
     
-    func test_feedImageView_loadsImageURLWhenVisiable() {
-        let image0 = makeImage(url: URL(string: "http://url-0.com)")!)
-        let image1 = makeImage(url: URL(string: "http://url-1.com)")!)
+    func test_feedImageView_loadsImageURLWhenVisible() {
+        let image0 = makeImage(url: URL(string: "http://url-0.com")!)
+        let image1 = makeImage(url: URL(string: "http://url-1.com")!)
         let (sut, loader) = makeSUT()
         
         sut.loadViewIfNeeded()
         loader.completeFeedLoading(with: [image0, image1])
         
-        XCTAssertEqual(loader.loadedImageURLs, [], "Expected no image URL requests until views become visiable")
+        XCTAssertEqual(loader.loadedImageURLs, [], "Expected no image URL requests until views become visible")
         
         sut.simulateFeedImageViewVisible(at: 0)
-        XCTAssertEqual(loader.loadedImageURLs, [image0.url], "Expected first image URL request once first view becomes visiable")
+        XCTAssertEqual(loader.loadedImageURLs, [image0.url], "Expected first image URL request once first view becomes visible")
         
         sut.simulateFeedImageViewVisible(at: 1)
-        XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url], "Expected second image URL request once second view also becomes visiable")
+        XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url], "Expected second image URL request once second view also becomes visible")
     }
     
     func test_feedImageView_cancelsImageLoadingWhenNotVisibleAnymore() {
-        let image0 = makeImage(url: URL(string: "http://url-0.com)")!)
-        let image1 = makeImage(url: URL(string: "http://url-1.com)")!)
+        let image0 = makeImage(url: URL(string: "http://url-0.com")!)
+        let image1 = makeImage(url: URL(string: "http://url-1.com")!)
         let (sut, loader) = makeSUT()
         
         sut.loadViewIfNeeded()
         loader.completeFeedLoading(with: [image0, image1])
         
-        XCTAssertEqual(loader.loadedImageURLs, [], "Expected no cancelled image URL requests until image is not visiable")
+        XCTAssertEqual(loader.loadedImageURLs, [], "Expected no cancelled image URL requests until image is not visible")
         
         sut.simulateFeedImageViewNotVisible(at: 0)
-        XCTAssertEqual(loader.cancelledImageURLs, [image0.url], "Expected one cancelled URL request once first image is not visiable anymore")
+        XCTAssertEqual(loader.cancelledImageURLs, [image0.url], "Expected one cancelled URL request once first image is not visible anymore")
         
         sut.simulateFeedImageViewNotVisible(at: 1)
-        XCTAssertEqual(loader.cancelledImageURLs, [image0.url, image1.url], "Expected two cancelled image URL requests once second image is also not visiable anymore")
+        XCTAssertEqual(loader.cancelledImageURLs, [image0.url, image1.url], "Expected two cancelled image URL requests once second image is also not visible anymore")
     }
     
-    func test_feedImageViewLoadingIndicator_isVisiableWhileLoadingImage() {
+    func test_feedImageView_reloadImageWhenWillVisible() {
+        let image0 = makeImage(url: URL(string: "http://url-0.com")!)
+        let image1 = makeImage(url: URL(string: "http://url-1.com")!)
+        let (sut, loader) = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        loader.completeFeedLoading(with: [image0, image1])
+        
+        let willVisibleView0 = sut.simulateFeedImageViewNotVisible(at: 0)
+        XCTAssertEqual(loader.cancelledImageURLs, [image0.url], "Expected one cancelled URL request once first image is not visible")
+        
+        let willVisibleView1 = sut.simulateFeedImageViewNotVisible(at: 1)
+        XCTAssertEqual(loader.cancelledImageURLs, [image0.url, image1.url], "Expected two cancelled image URL requests once second image is also not visible")
+        
+        loader.resetImageRequests() // Reset image request log for reducing assertion complexity
+        
+        sut.simulateFeedImageViewWillVisible(on: willVisibleView0!, at: 0)
+        XCTAssertEqual(loader.loadedImageURLs, [image0.url], "Expected one reload URL request when first image view will visible")
+        
+        sut.simulateFeedImageViewWillVisible(on: willVisibleView1!, at: 1)
+        XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url], "Expected two reload URL request when second image view will visible")
+    }
+    
+    func test_feedImageViewLoadingIndicator_isVisibleWhileLoadingImage() {
         let (sut, loader) = makeSUT()
         
         sut.loadViewIfNeeded()
@@ -186,8 +209,8 @@ final class FeedViewControllerTests: XCTestCase {
     }
     
     func test_feedImageViewRetryAction_retriesImageLoad() {
-        let image0 = makeImage(url: URL(string: "http://url-0.com)")!)
-        let image1 = makeImage(url: URL(string: "http://url-1.com)")!)
+        let image0 = makeImage(url: URL(string: "http://url-0.com")!)
+        let image1 = makeImage(url: URL(string: "http://url-1.com")!)
         let (sut, loader) = makeSUT()
         
         sut.loadViewIfNeeded()
@@ -208,14 +231,14 @@ final class FeedViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url, image0.url, image1.url], "Expected fourth image URL request after second view retry action")
     }
     
-    func test_feedImageView_preloadsImageURLWhenNearVisiable() {
-        let image0 = makeImage(url: URL(string: "http://url-0.com)")!)
-        let image1 = makeImage(url: URL(string: "http://url-1.com)")!)
+    func test_feedImageView_preloadsImageURLWhenNearVisible() {
+        let image0 = makeImage(url: URL(string: "http://url-0.com")!)
+        let image1 = makeImage(url: URL(string: "http://url-1.com")!)
         let (sut, loader) = makeSUT()
         
         sut.loadViewIfNeeded()
         loader.completeFeedLoading(with: [image0, image1])
-        XCTAssertEqual(loader.loadedImageURLs, [], "Expected no image URL requests until image is near visiable")
+        XCTAssertEqual(loader.loadedImageURLs, [], "Expected no image URL requests until image is near visible")
         
         sut.simulateFeedImageViewNearVisible(at: 0)
         XCTAssertEqual(loader.loadedImageURLs, [image0.url], "Expected first image URL request once first image is near visible")
@@ -224,14 +247,14 @@ final class FeedViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url], "Expected second image URL request once second image is near visible")
     }
     
-    func test_feedImageView_cancelsImageURLPreloadingWhenNotNearVisiableAnymore() {
-        let image0 = makeImage(url: URL(string: "http://url-0.com)")!)
-        let image1 = makeImage(url: URL(string: "http://url-1.com)")!)
+    func test_feedImageView_cancelsImageURLPreloadingWhenNotNearVisibleAnymore() {
+        let image0 = makeImage(url: URL(string: "http://url-0.com")!)
+        let image1 = makeImage(url: URL(string: "http://url-1.com")!)
         let (sut, loader) = makeSUT()
         
         sut.loadViewIfNeeded()
         loader.completeFeedLoading(with: [image0, image1])
-        XCTAssertEqual(loader.cancelledImageURLs, [], "Expected no cancelled image URL requests until image is not near visiable")
+        XCTAssertEqual(loader.cancelledImageURLs, [], "Expected no cancelled image URL requests until image is not near visible")
         
         sut.simulateFeedImageViewNotNearVisible(at: 0)
         XCTAssertEqual(loader.cancelledImageURLs, [image0.url], "Expected first cancelled image URL request once first image is not near visible anymore")
@@ -271,8 +294,8 @@ final class FeedViewControllerTests: XCTestCase {
             return
         }
         
-        let shouldLocationBeVisiable = image.location != nil
-        XCTAssertEqual(cell.isShowingLocation, shouldLocationBeVisiable, "Expected `isShowingLocation` to be \(shouldLocationBeVisiable) for image view at index: \(index)", file: file, line: line)
+        let shouldLocationBeVisible = image.location != nil
+        XCTAssertEqual(cell.isShowingLocation, shouldLocationBeVisible, "Expected `isShowingLocation` to be \(shouldLocationBeVisible) for image view at index: \(index)", file: file, line: line)
         
         XCTAssertEqual(cell.locationText, image.location, "Expected location text to be \(String(describing: image.location)) for image view at index: \(index)", file: file, line: line)
         
@@ -334,6 +357,10 @@ final class FeedViewControllerTests: XCTestCase {
         func completeImageLoadingWithError(at index: Int = 0) {
             imageRequests[index].completion(.failure(NSError(domain: "an error", code: 0)))
         }
+        
+        func resetImageRequests() {
+            imageRequests = []
+        }
     }
     
 }
@@ -348,12 +375,21 @@ private extension FeedViewController {
         feedImageView(at: index) as? FeedImageCell
     }
     
-    func simulateFeedImageViewNotVisible(at index: Int) {
+    func simulateFeedImageViewWillVisible(on cell: UITableViewCell, at index: Int) {
+        let delegate = tableView.delegate
+        let indexPath = IndexPath(row: index, section: feedImagesSection)
+        delegate?.tableView?(tableView, willDisplay: cell, forRowAt: indexPath)
+    }
+    
+    @discardableResult
+    func simulateFeedImageViewNotVisible(at index: Int) -> FeedImageCell? {
         let view = simulateFeedImageViewVisible(at: index)
         
         let delegate = tableView.delegate
         let indexPath = IndexPath(row: index, section: feedImagesSection)
         delegate?.tableView?(tableView, didEndDisplaying: view!, forRowAt: indexPath)
+        
+        return view
     }
     
     func simulateFeedImageViewNearVisible(at index: Int) {

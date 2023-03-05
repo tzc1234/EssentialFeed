@@ -64,16 +64,9 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
         cell.feedImageRetryButton.isHidden = true
         cell.feedImageContainer.startShimmering()
         
-        let loadImage = { [weak self] in
-            guard let self else { return }
-            
-            self.tasks[indexPath] = self.imageLoader?.loadImageData(from: cellModel.url) { [weak cell] result in
-                let data = try? result.get()
-                let image = data.map(UIImage.init) ?? nil
-                cell?.feedImageView.image = image
-                cell?.feedImageRetryButton.isHidden = (image != nil)
-                cell?.feedImageContainer.stopShimmering()
-            }
+        let loadImage = { [weak self, weak cell] in
+            guard let self, let cell else { return }
+            self.startTask(on: cell, forRowAt: indexPath)
         }
         
         cell.onRetry = loadImage
@@ -84,6 +77,10 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
     
     public override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cancelTask(forRowAt: indexPath)
+    }
+    
+    public override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        startTask(on: cell, forRowAt: indexPath)
     }
     
     public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
@@ -100,5 +97,18 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
     private func cancelTask(forRowAt indexPath: IndexPath) {
         tasks[indexPath]?.cancel()
         tasks[indexPath] = nil
+    }
+    
+    private func startTask(on cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let imageCell = cell as? FeedImageCell else { return }
+        
+        let cellModel = tableModel[indexPath.row]
+        tasks[indexPath] = imageLoader?.loadImageData(from: cellModel.url) { [weak imageCell] result in
+            let data = try? result.get()
+            let image = data.map(UIImage.init) ?? nil
+            imageCell?.feedImageView.image = image
+            imageCell?.feedImageRetryButton.isHidden = (image != nil)
+            imageCell?.feedImageContainer.stopShimmering()
+        }
     }
 }
