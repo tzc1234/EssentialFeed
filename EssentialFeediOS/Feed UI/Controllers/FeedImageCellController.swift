@@ -14,9 +14,9 @@ final class FeedImageCellController {
         return cell
     }()
     
-    private let viewModel: FeedImageViewModel
+    private let viewModel: FeedImageViewModel<UIImage>
     
-    init(viewModel: FeedImageViewModel) {
+    init(viewModel: FeedImageViewModel<UIImage>) {
         self.viewModel = viewModel
     }
     
