@@ -39,6 +39,10 @@ public final class FeedViewController: UITableViewController, UITableViewDataSou
         cancelCellController(forRowAt: indexPath)
     }
     
+    public override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cellController(forRowAt: indexPath).startLoad()
+    }
+    
     public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         indexPaths.forEach { indexPath in
             cellController(forRowAt: indexPath).preload()

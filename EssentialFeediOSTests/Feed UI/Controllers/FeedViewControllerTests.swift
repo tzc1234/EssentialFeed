@@ -108,28 +108,28 @@ final class FeedViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.cancelledImageURLs, [image0.url, image1.url], "Expected two cancelled image URL requests once second image is also not visible anymore")
     }
     
-//    func test_feedImageView_reloadImageWhenWillVisible() {
-//        let image0 = makeImage(url: URL(string: "http://url-0.com")!)
-//        let image1 = makeImage(url: URL(string: "http://url-1.com")!)
-//        let (sut, loader) = makeSUT()
-//
-//        sut.loadViewIfNeeded()
-//        loader.completeFeedLoading(with: [image0, image1])
-//
-//        let willVisibleView0 = sut.simulateFeedImageViewNotVisible(at: 0)
-//        XCTAssertEqual(loader.cancelledImageURLs, [image0.url], "Expected one cancelled URL request once first image is not visible")
-//
-//        let willVisibleView1 = sut.simulateFeedImageViewNotVisible(at: 1)
-//        XCTAssertEqual(loader.cancelledImageURLs, [image0.url, image1.url], "Expected two cancelled image URL requests once second image is also not visible")
-//
-//        loader.resetImageRequests() // Reset image request log for reducing assertion complexity
-//
-//        sut.simulateFeedImageViewWillVisible(on: willVisibleView0!, at: 0)
-//        XCTAssertEqual(loader.loadedImageURLs, [image0.url], "Expected one reload URL request when first image view will visible")
-//
-//        sut.simulateFeedImageViewWillVisible(on: willVisibleView1!, at: 1)
-//        XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url], "Expected two reload URL request when second image view will visible")
-//    }
+    func test_feedImageView_reloadImageWhenWillVisible() {
+        let image0 = makeImage(url: URL(string: "http://url-0.com")!)
+        let image1 = makeImage(url: URL(string: "http://url-1.com")!)
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        loader.completeFeedLoading(with: [image0, image1])
+
+        let willVisibleView0 = sut.simulateFeedImageViewNotVisible(at: 0)
+        XCTAssertEqual(loader.cancelledImageURLs, [image0.url], "Expected one cancelled URL request once first image is not visible")
+
+        let willVisibleView1 = sut.simulateFeedImageViewNotVisible(at: 1)
+        XCTAssertEqual(loader.cancelledImageURLs, [image0.url, image1.url], "Expected two cancelled image URL requests once second image is also not visible")
+
+        loader.resetImageRequests() // Reset image request log for reducing assertion complexity
+
+        sut.simulateFeedImageViewWillVisible(on: willVisibleView0!, at: 0)
+        XCTAssertEqual(loader.loadedImageURLs, [image0.url], "Expected one reload URL request when first image view will visible")
+
+        sut.simulateFeedImageViewWillVisible(on: willVisibleView1!, at: 1)
+        XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url], "Expected two reload URL request when second image view will visible")
+    }
     
     func test_feedImageViewLoadingIndicator_isVisibleWhileLoadingImage() {
         let (sut, loader) = makeSUT()
