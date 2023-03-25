@@ -157,32 +157,4 @@ extension LoadFeedFromRemoteUseCaseTests {
         
         wait(for: [exp], timeout: 1)
     }
-    
-    private class HTTPClientSpy: HTTPClient {
-        typealias Completion = (HTTPClient.Result) -> Void
-        
-        private struct Task: HTTPClientTask {
-            func cancel() {}
-        }
-        
-        private(set) var message = [(url: URL, completion: Completion)]()
-        
-        var requestedURLs: [URL] {
-            message.map(\.url)
-        }
-        
-        func get(from url: URL, completion: @escaping Completion) -> HTTPClientTask {
-            message.append((url, completion))
-            return Task()
-        }
-        
-        func complete(with error: Error, at index: Int = 0) {
-            message[index].completion(.failure(error))
-        }
-        
-        func complete(withStatusCode code: Int, data: Data, at index: Int = 0) {
-            let response = HTTPURLResponse(url: requestedURLs[index], statusCode: code, httpVersion: nil, headerFields: nil)!
-            message[index].completion(.success((data, response)))
-        }
-    }
 }
