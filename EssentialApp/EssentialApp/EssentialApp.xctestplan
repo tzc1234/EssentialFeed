@@ -1,0 +1,29 @@
+{
+  "configurations" : [
+    {
+      "id" : "351B71A9-DED9-4EB8-B75B-70699088316D",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:EssentialApp.xcodeproj",
+      "identifier" : "BEA2224D29E36C4D00A9E916",
+      "name" : "EssentialApp"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:EssentialApp.xcodeproj",
+        "identifier" : "BEA2226329E36C4E00A9E916",
+        "name" : "EssentialAppTests"
+      }
+    }
+  ],
+  "version" : 1
+}
