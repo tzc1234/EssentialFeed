@@ -14,6 +14,10 @@
 		BEA2225B29E36C4E00A9E916 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEA2225A29E36C4E00A9E916 /* Assets.xcassets */; };
 		BEA2225E29E36C4E00A9E916 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEA2225C29E36C4E00A9E916 /* LaunchScreen.storyboard */; };
 		BEA2226929E36C4E00A9E916 /* EssentialAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA2226829E36C4E00A9E916 /* EssentialAppTests.swift */; };
+		BEA2228529E36E3400A9E916 /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA2228329E36E3400A9E916 /* EssentialFeed.framework */; };
+		BEA2228629E36E3400A9E916 /* EssentialFeed.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BEA2228329E36E3400A9E916 /* EssentialFeed.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BEA2228729E36E3400A9E916 /* EssentialFeediOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA2228429E36E3400A9E916 /* EssentialFeediOS.framework */; };
+		BEA2228829E36E3400A9E916 /* EssentialFeediOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BEA2228429E36E3400A9E916 /* EssentialFeediOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,6 +30,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		BEA2228929E36E3400A9E916 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BEA2228629E36E3400A9E916 /* EssentialFeed.framework in Embed Frameworks */,
+				BEA2228829E36E3400A9E916 /* EssentialFeediOS.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		BEA2224E29E36C4D00A9E916 /* EssentialApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EssentialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEA2225129E36C4D00A9E916 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -37,9 +56,9 @@
 		BEA2225F29E36C4E00A9E916 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEA2226429E36C4E00A9E916 /* EssentialAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEA2226829E36C4E00A9E916 /* EssentialAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssentialAppTests.swift; sourceTree = "<group>"; };
-		BEA2227229E36C4E00A9E916 /* EssentialAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssentialAppUITests.swift; sourceTree = "<group>"; };
-		BEA2227429E36C4E00A9E916 /* EssentialAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssentialAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		BEA2228129E36CC400A9E916 /* EssentialApp.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = EssentialApp.xctestplan; path = EssentialApp/EssentialApp.xctestplan; sourceTree = "<group>"; };
+		BEA2228329E36E3400A9E916 /* EssentialFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EssentialFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEA2228429E36E3400A9E916 /* EssentialFeediOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EssentialFeediOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +66,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEA2228529E36E3400A9E916 /* EssentialFeed.framework in Frameworks */,
+				BEA2228729E36E3400A9E916 /* EssentialFeediOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,8 +87,8 @@
 				BEA2228129E36CC400A9E916 /* EssentialApp.xctestplan */,
 				BEA2225029E36C4D00A9E916 /* EssentialApp */,
 				BEA2226729E36C4E00A9E916 /* EssentialAppTests */,
-				BEA2227129E36C4E00A9E916 /* EssentialAppUITests */,
 				BEA2224F29E36C4D00A9E916 /* Products */,
+				BEA2228229E36E3400A9E916 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,13 +123,13 @@
 			path = EssentialAppTests;
 			sourceTree = "<group>";
 		};
-		BEA2227129E36C4E00A9E916 /* EssentialAppUITests */ = {
+		BEA2228229E36E3400A9E916 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BEA2227229E36C4E00A9E916 /* EssentialAppUITests.swift */,
-				BEA2227429E36C4E00A9E916 /* EssentialAppUITestsLaunchTests.swift */,
+				BEA2228329E36E3400A9E916 /* EssentialFeed.framework */,
+				BEA2228429E36E3400A9E916 /* EssentialFeediOS.framework */,
 			);
-			path = EssentialAppUITests;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -121,6 +142,7 @@
 				BEA2224A29E36C4D00A9E916 /* Sources */,
 				BEA2224B29E36C4D00A9E916 /* Frameworks */,
 				BEA2224C29E36C4D00A9E916 /* Resources */,
+				BEA2228929E36E3400A9E916 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -445,9 +467,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tszlung.EssentialAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EssentialApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EssentialApp";
 			};
 			name = Debug;
@@ -465,9 +490,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tszlung.EssentialAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EssentialApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EssentialApp";
 			};
 			name = Release;
