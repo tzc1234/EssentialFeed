@@ -15,12 +15,15 @@ class FeedImageDataLoaderWithFallabckComposite: FeedImageDataLoader {
         }
     }
     
+    private let primary: FeedImageDataLoader
+    
     init(primary: FeedImageDataLoader, fallback: FeedImageDataLoader) {
-        
+        self.primary = primary
     }
     
     func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
-        Task()
+        _ = primary.loadImageData(from: url) { _ in }
+        return Task()
     }
 }
 
@@ -34,8 +37,24 @@ final class FeedImageDataLoaderWithFailbackCompositeTests: XCTestCase {
         XCTAssertTrue(primaryLoader.loadedURLs.isEmpty, "Expected no loaded URLs in the primary loader")
         XCTAssertTrue(fallbackLoader.loadedURLs.isEmpty, "Expected no loaded URLs in the fallback loader")
     }
+    
+    func test_loadImageData_loadsFromPrimaryLoaderFirst() {
+        let url = anyURL()
+        let primaryLoader = LoaderSpy()
+        let fallbackLoader = LoaderSpy()
+        let sut = FeedImageDataLoaderWithFallabckComposite(primary: primaryLoader, fallback: fallbackLoader)
+        
+        _ = sut.loadImageData(from: url) { _ in }
+        
+        XCTAssertEqual(primaryLoader.loadedURLs, [url], "Expected to load URL from primary loader")
+        XCTAssertTrue(fallbackLoader.loadedURLs.isEmpty, "Expected no loaded URLs in the fallback loader")
+    }
 
     // MARK: - Helpers
+    
+    private func anyURL() -> URL {
+        URL(string: "http://a-url.com")!
+    }
     
     private class LoaderSpy: FeedImageDataLoader {
         private var messages = [(url: URL, completion: (FeedImageDataLoader.Result) -> Void)]()
@@ -49,7 +68,8 @@ final class FeedImageDataLoaderWithFailbackCompositeTests: XCTestCase {
         }
         
         func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
-            Task()
+            messages.append((url, completion))
+            return Task()
         }
     }
     
