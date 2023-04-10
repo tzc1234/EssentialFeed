@@ -94,8 +94,8 @@
 		BE767C5329E4161D00313D25 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				BE767C5129E4161700313D25 /* XCTestCase+MemoryLeakTracking.swift */,
 				BE767C5429E4169800313D25 /* SharedTestHelpers.swift */,
+				BE767C5129E4161700313D25 /* XCTestCase+MemoryLeakTracking.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
