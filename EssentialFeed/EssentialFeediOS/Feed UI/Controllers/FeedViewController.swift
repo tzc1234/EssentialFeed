@@ -7,18 +7,18 @@
 
 import UIKit
 
-protocol FeedViewControllerDelegate {
+public protocol FeedViewControllerDelegate {
     func didRequestFeedRefresh()
 }
 
 public final class FeedViewController: UITableViewController, UITableViewDataSourcePrefetching, FeedLoadingView {
     private let delegate: FeedViewControllerDelegate
     
-    var tableModel = [FeedImageCellController]() {
+    private var tableModel = [FeedImageCellController]() {
         didSet { tableView.reloadData() }
     }
     
-    init?(coder: NSCoder, delegate: FeedViewControllerDelegate) {
+    public init?(coder: NSCoder, delegate: FeedViewControllerDelegate) {
         self.delegate = delegate
         super.init(coder: coder)
     }
@@ -37,7 +37,11 @@ public final class FeedViewController: UITableViewController, UITableViewDataSou
         delegate.didRequestFeedRefresh()
     }
     
-    func display(_ viewModel: FeedLoadingViewModel) {
+    public func display(_ cellController: [FeedImageCellController]) {
+        tableModel = cellController
+    }
+    
+    public func display(_ viewModel: FeedLoadingViewModel) {
         if viewModel.isLoading {
             refreshControl?.beginRefreshing()
         } else {

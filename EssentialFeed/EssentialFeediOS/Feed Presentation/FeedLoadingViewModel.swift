@@ -5,6 +5,6 @@
 //  Created by Tsz-Lung on 11/03/2023.
 //
 
-struct FeedLoadingViewModel {
+public struct FeedLoadingViewModel {
     let isLoading: Bool
 }

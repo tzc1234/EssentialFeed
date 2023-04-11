@@ -5,7 +5,7 @@
 //  Created by Tsz Lung on 08/03/2023.
 //
 
-struct FeedImageViewModel<Image> {
+public struct FeedImageViewModel<Image> {
     let description: String?
     let location: String?
     let image: Image?
