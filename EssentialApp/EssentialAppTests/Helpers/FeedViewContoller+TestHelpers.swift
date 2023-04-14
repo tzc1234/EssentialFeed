@@ -72,4 +72,12 @@ extension FeedViewController {
     }
     
     private var feedImagesSection: Int { 0 }
+    
+    var errorMessage: String? {
+        return errorView?.message
+    }
+    
+    func simulateTapOnErrorMessage() {
+        errorView?.button.simulateTap()
+    }
 }
