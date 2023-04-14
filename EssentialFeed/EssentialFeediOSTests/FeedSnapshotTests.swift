@@ -25,7 +25,7 @@ final class FeedSnapshotTests: XCTestCase {
         let storyboard = UIStoryboard(name: "Feed", bundle: bundle)
         let controller = storyboard.instantiateInitialViewController { coder in
             let controller = FeedViewController(coder: coder, delegate: DummayDelegate())
-            controller?.title = FeedPresenter.title
+            controller?.title = ""
             return controller
         } as! FeedViewController
         controller.loadViewIfNeeded()

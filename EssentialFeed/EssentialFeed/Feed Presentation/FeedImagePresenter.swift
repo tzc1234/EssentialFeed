@@ -1,12 +1,11 @@
 //
 //  FeedImagePresenter.swift
-//  EssentialFeediOS
+//  EssentialFeed
 //
 //  Created by Tsz-Lung on 11/03/2023.
 //
 
 import Foundation
-import EssentialFeed
 
 public protocol FeedImageView {
     associatedtype Image
