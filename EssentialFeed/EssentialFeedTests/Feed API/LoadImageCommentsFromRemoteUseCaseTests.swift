@@ -83,8 +83,15 @@ final class LoadImageCommentsFromRemoteUseCaseTests: XCTestCase {
     func test_load_deliversItemsOn2xxHTTPResponseWithJSONItems() {
         let (sut, client) = makeSUT()
         
-        let item1 = makeItem(imageURL: URL(string: "https://a-url.com")!)
-        let item2 = makeItem(description: "a description", location: "a location", imageURL: URL(string: "https://another-url.com")!)
+        let item1 = makeItem(
+            message: "a message",
+            createdAt: (Date(timeIntervalSince1970: 1598627222), "2020-08-28T15:07:02+00:00"),
+            username: "a username")
+        
+        let item2 = makeItem(
+            message: "another message",
+            createdAt: (Date(timeIntervalSince1970: 1577881882), "2020-01-01T12:31:22+00:00"),
+            username: "another username")
         
         let items = [item1.model, item2.model]
         
@@ -128,15 +135,15 @@ extension LoadImageCommentsFromRemoteUseCaseTests {
         .failure(error)
     }
     
-    private func makeItem(id: UUID = .init(), description: String? = nil, location: String? = nil, imageURL: URL) -> (model: FeedImage, json: [String: Any]) {
-        let item = FeedImage(id: id, description: description, location: location, url: imageURL)
+    private func makeItem(id: UUID = .init(), message: String, createdAt: (date: Date, iso8601String: String), username: String) -> (model: ImageComment, json: [String: Any]) {
+        let item = ImageComment(id: id, message: message, createdAt: createdAt.date, username: username)
         
-        let json = [
-            "id": item.id.uuidString,
-            "description": item.description,
-            "location": item.location,
-            "image": item.url.absoluteString
-        ].compactMapValues { $0 }
+        let json: [String: Any] = [
+            "id": id.uuidString,
+            "message": message,
+            "created_at": createdAt.iso8601String,
+            "author": ["username": username]
+        ]
         
         return (item, json)
     }
