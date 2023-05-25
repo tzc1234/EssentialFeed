@@ -18,9 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private lazy var httpClient: HTTPClient = {
         URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
     }()
-    
-    private lazy var remoteFeedLoader = RemoteLoader(url: url, client: httpClient, mapper: FeedItemsMapper.map)
-    
+
     private lazy var store: FeedStore & FeedImageDataStore = {
         try! CoreDataFeedStore(storeURL: NSPersistentContainer.defaultDirectoryURL().appending(path: "feed-store.sqlite"))
     }()
@@ -56,8 +54,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeRemoteFeedLoaderWithLocalFallback() -> FeedLoader.Publisher {
-        remoteFeedLoader
-            .loadPublisher()
+        httpClient
+            .getPublisher(url: url)
+            .tryMap(FeedItemsMapper.map)
             .caching(to: localFeedLoader)
             .fallback(to: localFeedLoader.loadPublisher)
     }
