@@ -10,10 +10,6 @@ import EssentialFeed
 
 final class LoadResourcePresenterTests: XCTestCase {
     
-    func test_title_isLocalized() {
-        XCTAssertEqual(LoadResourcePresenter.title, localized("FEED_VIEW_TITLE"))
-    }
-    
     func test_init_doesNotSendMessagesToView() {
         let (_, view) = makeSUT()
         
@@ -55,6 +51,7 @@ final class LoadResourcePresenterTests: XCTestCase {
     }
     
     // MARK: - Helpers
+
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LoadResourcePresenter, view: ViewSpy) {
         let view = ViewSpy()
         let sut = LoadResourcePresenter(feedView: view, loadingView: view, errorView: view)
