@@ -18,7 +18,7 @@ final class FeedUIIntegrationTests: XCTestCase {
         
         sut.loadViewIfNeeded()
         
-        XCTAssertEqual(sut.title, localized("FEED_VIEW_TITLE"))
+        XCTAssertEqual(sut.title, feedTitle)
     }
 
     func test_loadFeedActions_requestFeedFromLoader() {
@@ -347,7 +347,7 @@ final class FeedUIIntegrationTests: XCTestCase {
         XCTAssertNil(sut.errorMessage, "Expected no error messages before the completion of a feed loading request")
 
         loader.completeFeedLoadingWithError(at: 0)
-        XCTAssertEqual(sut.errorMessage, localized("GENERIC_CONNECTION_ERROR"), "Expected an error message after received an error from feed loading request")
+        XCTAssertEqual(sut.errorMessage, loadError, "Expected an error message after received an error from feed loading request")
 
         sut.simulateUserInitiatedFeedReload()
         XCTAssertNil(sut.errorMessage, "Expected no error messages after reload the feed")
@@ -360,7 +360,7 @@ final class FeedUIIntegrationTests: XCTestCase {
         XCTAssertNil(sut.errorMessage, "Expected no error messages before the completion of a feed loading request")
         
         loader.completeFeedLoadingWithError(at: 0)
-        XCTAssertEqual(sut.errorMessage, localized("GENERIC_CONNECTION_ERROR"), "Expected an error message after received an error from feed loading request")
+        XCTAssertEqual(sut.errorMessage, loadError, "Expected an error message after received an error from feed loading request")
         
         sut.simulateTapOnErrorMessage()
         XCTAssertNil(sut.errorMessage, "Expected no error messages after tapping on the error message")
