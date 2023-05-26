@@ -18,7 +18,7 @@ public final class LoadResourcePresenter {
         self.errorView = errorView
     }
 
-    public func didStartLoadingFeed() {
+    public func didStartLoading() {
         errorView.display(.init(message: .none))
         loadingView.display(FeedLoadingViewModel(isLoading: true))
     }
