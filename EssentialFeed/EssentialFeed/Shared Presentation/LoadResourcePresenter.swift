@@ -1,25 +1,13 @@
 //
-//  FeedPresenter.swift
+//  LoadResourcePresenter.swift
 //  EssentialFeed
 //
-//  Created by Tsz-Lung on 11/03/2023.
+//  Created by Tsz-Lung on 26/05/2023.
 //
 
 import Foundation
 
-public protocol FeedLoadingView {
-    func display(_ viewModel: FeedLoadingViewModel)
-}
-
-public protocol FeedView {
-    func display(_ viewModel: FeedViewModel)
-}
-
-public protocol FeedErrorView {
-    func display(_ viewModel: FeedErrorViewModel)
-}
-
-public final class FeedPresenter {
+public final class LoadResourcePresenter {
     private let feedView: FeedView
     private let loadingView: FeedLoadingView
     private let errorView: FeedErrorView
@@ -38,8 +26,8 @@ public final class FeedPresenter {
     }
     
     public func didStartLoadingFeed() {
-        loadingView.display(FeedLoadingViewModel(isLoading: true))
         errorView.display(.init(message: .none))
+        loadingView.display(FeedLoadingViewModel(isLoading: true))
     }
     
     public func didFinishLoadingFeed(with feed: [FeedImage]) {
@@ -48,7 +36,7 @@ public final class FeedPresenter {
     }
     
     public func didFinishLoadingFeed(with error: Error) {
-        loadingView.display(FeedLoadingViewModel(isLoading: false))
         errorView.display(.init(message: Localized.Feed.loadError))
+        loadingView.display(FeedLoadingViewModel(isLoading: false))
     }
 }
