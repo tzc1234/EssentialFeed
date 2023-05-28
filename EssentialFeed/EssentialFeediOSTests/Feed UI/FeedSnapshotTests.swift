@@ -53,10 +53,8 @@ final class FeedSnapshotTests: XCTestCase {
         let bundle = Bundle(for: ListViewController.self)
         let storyboard = UIStoryboard(name: "Feed", bundle: bundle)
         let controller = storyboard.instantiateInitialViewController { coder in
-            let controller = ListViewController(coder: coder, delegate: DummayDelegate())
-            controller?.title = ""
-            return controller
-        } as! ListViewController
+            ListViewController(coder: coder, title: "", onRefresh: {})
+        }!
         controller.tableView.showsVerticalScrollIndicator = false
         controller.tableView.showsHorizontalScrollIndicator = false
         controller.loadViewIfNeeded()
@@ -87,10 +85,6 @@ final class FeedSnapshotTests: XCTestCase {
             ImageStub(description: nil, location: "Cannon Street, London", image: nil),
             ImageStub(description: nil, location: "Brighton", image: nil)
         ]
-    }
-    
-    private class DummayDelegate: FeedViewControllerDelegate {
-        func didRequestFeedRefresh() {}
     }
     
 }
