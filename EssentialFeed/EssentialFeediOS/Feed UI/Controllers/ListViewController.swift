@@ -8,10 +8,6 @@
 import UIKit
 import EssentialFeed
 
-public protocol FeedViewControllerDelegate {
-    func didRequestFeedRefresh()
-}
-
 public protocol CellController {
     func view(in: UITableView) -> UITableViewCell
     func preload()
@@ -28,11 +24,12 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
         didSet { tableView.reloadData() }
     }
     
-    private let delegate: FeedViewControllerDelegate
+    private let onRefresh: () -> Void
     
-    public init?(coder: NSCoder, delegate: FeedViewControllerDelegate) {
-        self.delegate = delegate
+    public init?(coder: NSCoder, title: String, onRefresh: @escaping () -> Void) {
+        self.onRefresh = onRefresh
         super.init(coder: coder)
+        self.title = title
     }
     
     required init?(coder: NSCoder) {
@@ -52,7 +49,7 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
     }
     
     @IBAction private func refresh() {
-        delegate.didRequestFeedRefresh()
+        onRefresh()
     }
     
     public func display(_ cellController: [CellController]) {
