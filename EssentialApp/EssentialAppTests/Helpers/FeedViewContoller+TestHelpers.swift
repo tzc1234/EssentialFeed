@@ -74,10 +74,10 @@ extension ListViewController {
     private var feedImagesSection: Int { 0 }
     
     var errorMessage: String? {
-        return errorView?.message
+        return errorView.message
     }
     
     func simulateTapOnErrorMessage() {
-        errorView?.button.simulateTap()
+        errorView.simulateTap()
     }
 }
