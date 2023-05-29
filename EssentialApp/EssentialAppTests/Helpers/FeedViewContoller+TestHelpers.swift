@@ -18,10 +18,15 @@ extension ListViewController {
         feedImageView(at: index) as? FeedImageCell
     }
     
-    func simulateFeedImageViewWillVisible(on cell: UITableViewCell, at index: Int) {
+    @discardableResult
+    func simulateFeedImageBecomingVisibleAgain(at row: Int) -> FeedImageCell? {
+        let view = simulateFeedImageViewNotVisible(at: row)
+        
         let delegate = tableView.delegate
-        let indexPath = IndexPath(row: index, section: feedImagesSection)
-        delegate?.tableView?(tableView, willDisplay: cell, forRowAt: indexPath)
+        let index = IndexPath(row: row, section: feedImagesSection)
+        delegate?.tableView?(tableView, willDisplay: view!, forRowAt: index)
+        
+        return view
     }
     
     @discardableResult
