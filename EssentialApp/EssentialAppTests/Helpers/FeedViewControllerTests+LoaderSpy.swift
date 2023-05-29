@@ -63,6 +63,7 @@ extension FeedUIIntegrationTests {
         }
         
         func completeImageLoadingWithError(at index: Int = 0) {
+            guard index < imageRequests.count else { return }
             imageRequests[index].completion(.failure(NSError(domain: "an error", code: 0)))
         }
     }
