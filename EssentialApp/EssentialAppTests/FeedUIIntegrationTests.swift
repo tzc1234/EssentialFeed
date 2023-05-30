@@ -11,7 +11,7 @@ import EssentialApp
 import EssentialFeed
 import EssentialFeediOS
 
-final class FeedUIIntegrationTests: XCTestCase {
+class FeedUIIntegrationTests: XCTestCase {
     
     func test_feedView_hasTitle() {
         let (sut, _) = makeSUT()
@@ -376,7 +376,7 @@ final class FeedUIIntegrationTests: XCTestCase {
         loader.completeFeedLoadingWithError(at: 0)
         XCTAssertEqual(sut.errorMessage, loadError, "Expected an error message after received an error from feed loading request")
         
-        sut.simulateTapOnErrorMessage()
+        sut.simulateErrorViewTap()
         XCTAssertNil(sut.errorMessage, "Expected no error messages after tapping on the error message")
     }
 

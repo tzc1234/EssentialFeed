@@ -82,7 +82,7 @@ extension ListViewController {
         return errorView.message
     }
     
-    func simulateTapOnErrorMessage() {
+    func simulateErrorViewTap() {
         errorView.simulateTap()
     }
 }
