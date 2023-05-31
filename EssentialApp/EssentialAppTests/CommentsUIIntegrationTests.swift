@@ -194,8 +194,8 @@ final class CommentsUIIntegrationTests: XCTestCase {
             return publisher.eraseToAnyPublisher()
         }
         
-        func completeCommentsLoading(with feed: [ImageComment] = [], at index: Int = 0) {
-            requests[index].send(feed)
+        func completeCommentsLoading(with comments: [ImageComment] = [], at index: Int = 0) {
+            requests[index].send(comments)
         }
         
         func completeCommentsLoadingWithError(at index: Int = 0) {

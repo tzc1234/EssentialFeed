@@ -26,6 +26,8 @@ extension ListViewController {
     }
 }
 
+// MARK: - Comments
+
 extension ListViewController {
     func numberOfRenderedComments() -> Int {
         tableView.numberOfSections == 0 ? 0 : tableView.numberOfRows(inSection: commentsSection)
@@ -54,7 +56,15 @@ extension ListViewController {
     private var commentsSection: Int { 0 }
 }
 
+// MARK: - FeedImage
+
 extension ListViewController {
+    func simulateTapOnFeedImage(at row: Int) {
+        let delegate = tableView.delegate
+        let indexPath = IndexPath(row: row, section: feedImagesSection)
+        delegate?.tableView?(tableView, didSelectRowAt: indexPath)
+    }
+    
     @discardableResult
     func simulateFeedImageViewVisible(at index: Int) -> FeedImageCell? {
         feedImageView(at: index) as? FeedImageCell
