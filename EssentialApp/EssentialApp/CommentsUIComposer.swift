@@ -38,16 +38,14 @@ public final class CommentsUIComposer {
     }
 }
 
-public final class CommentsViewAdapter: ResourceView {
+private final class CommentsViewAdapter: ResourceView {
     private weak var controller: ListViewController?
     
-    private typealias ImageDataPresentationAdapter = LoadResourcePresentationAdapter<Data, WeakRefVirtualProxy<FeedImageCellController>>
-    
-    public init(controller: ListViewController) {
+    init(controller: ListViewController) {
         self.controller = controller
     }
     
-    public func display(_ viewModel: ImageCommentsViewModel) {
+    func display(_ viewModel: ImageCommentsViewModel) {
         controller?.display(viewModel.comments.map { viewModel in
             CellController(id: viewModel, ImageCommentCellController(model: viewModel))
         })
