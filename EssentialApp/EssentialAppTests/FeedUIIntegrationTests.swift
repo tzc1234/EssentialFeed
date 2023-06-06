@@ -470,6 +470,21 @@ class FeedUIIntegrationTests: XCTestCase {
         sut.simulateErrorViewTap()
         XCTAssertNil(sut.errorMessage, "Expected no error messages after tapping on the error message")
     }
+    
+    func test_loadMoreCompletion_rendersErrorMessageOnError() {
+        let (sut, loader) = makeSUT()
+        sut.loadViewIfNeeded()
+        loader.completeFeedLoading()
+        
+        sut.simulateLoadMoreFeedAction()
+        XCTAssertNil(sut.loadMoreFeedErrorMessage)
+
+        loader.completeLoadMoreWithError(at: 0)
+        XCTAssertEqual(sut.loadMoreFeedErrorMessage, loadError)
+
+        sut.simulateLoadMoreFeedAction()
+        XCTAssertNil(sut.loadMoreFeedErrorMessage)
+    }
 
     // MARK: - Helpers
     
