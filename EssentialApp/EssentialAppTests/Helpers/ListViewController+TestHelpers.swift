@@ -123,6 +123,11 @@ extension ListViewController {
         delegate?.tableView?(tableView, willDisplay: view, forRowAt: index)
     }
     
+    func simulateScrollOnLoadMoreView() {
+        let y = tableView.contentOffset.y
+        tableView.setContentOffset(.init(x: 0, y: y + 1), animated: false)
+    }
+    
     func simulateTapOnLoadMoreFeedError() {
         let delegate = tableView.delegate
         let index = IndexPath(row: 0, section: feedLoadMoreSection)

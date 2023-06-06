@@ -168,6 +168,32 @@ class FeedUIIntegrationTests: XCTestCase {
         XCTAssertEqual(loader.loadMoreCallCount, 3, "Expected no request after loading all pages")
     }
     
+    func test_loadMoreView_loadMoreWhileScrolledLoadMoreView() {
+        let tableViewStub = TableViewStub()
+        let (sut, loader) = makeSUT()
+        tableViewStub.dataSource = sut.tableView.dataSource
+        tableViewStub.delegate = sut.tableView.delegate
+        sut.tableView = tableViewStub
+        sut.loadViewIfNeeded()
+        loader.completeFeedLoading()
+        
+        XCTAssertEqual(loader.loadMoreCallCount, 0, "Expected no requests until load more action")
+        XCTAssertTrue(sut.canLoadMoreFeed, "Expected can load more")
+        
+        sut.simulateLoadMoreFeedAction()
+        XCTAssertEqual(loader.loadMoreCallCount, 1, "Expected a load more request")
+        
+        loader.completeLoadMoreWithError(at: 0)
+        
+        tableViewStub.simulateEndScrollingLoadMoreView()
+        sut.simulateScrollOnLoadMoreView()
+        XCTAssertEqual(loader.loadMoreCallCount, 1, "Expected no load more requests end scolling")
+        
+        tableViewStub.simulateScrollingLoadMoreView()
+        sut.simulateScrollOnLoadMoreView()
+        XCTAssertEqual(loader.loadMoreCallCount, 2, "Expected a load more requests during scolling")
+    }
+    
     func test_loadingMoreIndicator_isVisibleWhileLoadingMore() {
         let (sut, loader) = makeSUT()
         
@@ -529,6 +555,22 @@ class FeedUIIntegrationTests: XCTestCase {
     
     private func anyImageData() -> Data {
         UIImage.make(withColor: .red).pngData()!
+    }
+    
+    private class TableViewStub: UITableView {
+        private var _isDragging = false
+        
+        override var isDragging: Bool {
+            _isDragging
+        }
+        
+        func simulateScrollingLoadMoreView() {
+            _isDragging = true
+        }
+        
+        func simulateEndScrollingLoadMoreView() {
+            _isDragging = false
+        }
     }
     
 }
