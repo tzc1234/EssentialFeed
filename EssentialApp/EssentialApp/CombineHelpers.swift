@@ -25,13 +25,10 @@ public extension Paginated {
     }
     
     var loadMorePublisher: (() -> AnyPublisher<Self, Error>)? {
-        guard let loadMore else { return nil }
-
-        return {
-            Deferred {
-                Future(loadMore)
+        loadMore.flatMap { loadMore in
+            return {
+                Deferred { Future(loadMore) }.eraseToAnyPublisher()
             }
-            .eraseToAnyPublisher()
         }
     }
 }
