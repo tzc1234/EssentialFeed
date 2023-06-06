@@ -184,7 +184,6 @@ class FeedUIIntegrationTests: XCTestCase {
         XCTAssertEqual(loader.loadMoreCallCount, 1, "Expected a load more request")
         
         loader.completeLoadMoreWithError(at: 0)
-        
         tableViewStub.simulateEndScrollingLoadMoreView()
         sut.simulateScrollOnLoadMoreView()
         XCTAssertEqual(loader.loadMoreCallCount, 1, "Expected no load more requests end scolling")
