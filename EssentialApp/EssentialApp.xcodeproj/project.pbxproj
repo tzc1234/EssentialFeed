@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE4E8EDE2A30C76600C2CAE4 /* NullStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4E8EDD2A30C76600C2CAE4 /* NullStore.swift */; };
 		BE54144629E5F82700AD3144 /* SceneDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE54144529E5F82700AD3144 /* SceneDelegateTests.swift */; };
 		BE54144D29E5FBD500AD3144 /* WeakRefVirtualProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE54144929E5FBD500AD3144 /* WeakRefVirtualProxy.swift */; };
 		BE54144E29E5FBD500AD3144 /* FeedUIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE54144B29E5FBD500AD3144 /* FeedUIComposer.swift */; };
@@ -69,6 +70,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BE4E8EDD2A30C76600C2CAE4 /* NullStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NullStore.swift; sourceTree = "<group>"; };
 		BE54144529E5F82700AD3144 /* SceneDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegateTests.swift; sourceTree = "<group>"; };
 		BE54144829E5FBD500AD3144 /* LoadResourcePresentationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadResourcePresentationAdapter.swift; sourceTree = "<group>"; };
 		BE54144929E5FBD500AD3144 /* WeakRefVirtualProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakRefVirtualProxy.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 		BEA2225029E36C4D00A9E916 /* EssentialApp */ = {
 			isa = PBXGroup;
 			children = (
+				BE4E8EDD2A30C76600C2CAE4 /* NullStore.swift */,
 				BE54144B29E5FBD500AD3144 /* FeedUIComposer.swift */,
 				BE54144929E5FBD500AD3144 /* WeakRefVirtualProxy.swift */,
 				BE54144829E5FBD500AD3144 /* LoadResourcePresentationAdapter.swift */,
@@ -313,6 +316,7 @@
 				BEA2225229E36C4D00A9E916 /* AppDelegate.swift in Sources */,
 				BEA2225429E36C4D00A9E916 /* SceneDelegate.swift in Sources */,
 				BE54144D29E5FBD500AD3144 /* WeakRefVirtualProxy.swift in Sources */,
+				BE4E8EDE2A30C76600C2CAE4 /* NullStore.swift in Sources */,
 				BE54144E29E5FBD500AD3144 /* FeedUIComposer.swift in Sources */,
 				BE54145229E5FBD500AD3144 /* LoadResourcePresentationAdapter.swift in Sources */,
 				BE54145129E5FBD500AD3144 /* FeedViewAdapter.swift in Sources */,
