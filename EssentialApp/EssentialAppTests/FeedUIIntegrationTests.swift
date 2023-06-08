@@ -433,6 +433,27 @@ class FeedUIIntegrationTests: XCTestCase {
         XCTAssertEqual(loader.cancelledImageURLs, [image0.url, image1.url], "Expected second cancelled image URL request once second image is not near visible anymore")
     }
     
+    func test_feedImageView_configuresViewCorrectlyWhenTransitioningFromNearVisibleToVisibleWhileStillPreloadingImage() {
+        let (sut, loader) = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        loader.completeFeedLoading(with: [makeImage()])
+        
+        sut.simulateFeedImageViewNearVisible(at: 0)
+        let view = sut.simulateFeedImageViewVisible(at: 0)
+        
+        XCTAssertEqual(view?.renderedImage, nil, "Expected no rendered image when view becomes visible while still preloading image")
+        XCTAssertEqual(view?.isShowingRetryAction, false, "Expected no retry action when view becomes visible while still preloading image")
+        XCTAssertEqual(view?.isShowingImageLoadingIndicator, true, "Expected loading indicator when view becomes visible while still preloading image")
+        
+        let imageData = anyImageData()
+        loader.completeImageLoading(with: imageData, at: 0)
+        
+        XCTAssertEqual(view?.renderedImage, imageData, "Expected rendered image after image preloads successfully")
+        XCTAssertEqual(view?.isShowingRetryAction, false, "Expected no retry action after image preloads successfully")
+        XCTAssertEqual(view?.isShowingImageLoadingIndicator, false, "Expected no loading indicator after image preloads successfully")
+    }
+    
     func test_feedImageView_doesNotShowDataFromPreviousRequestWhenCellIsReused() throws {
         let (sut, loader) = makeSUT()
 
