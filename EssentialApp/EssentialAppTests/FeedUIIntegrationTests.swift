@@ -468,6 +468,25 @@ class FeedUIIntegrationTests: XCTestCase {
         XCTAssertNil(view0.renderedImage, "Expected no image state change for reused view once image loading completes successfully")
     }
     
+    func test_feedImageView_showsDataForCurrentViewWhenOldCellIsReused() throws {
+        let (sut, loader) = makeSUT()
+        sut.loadViewIfNeeded()
+        loader.completeFeedLoading(with: [makeImage(), makeImage()])
+        
+        let oldView = try XCTUnwrap(sut.simulateFeedImageViewVisible(at: 0))
+        let oldImageData = UIImage.make(withColor: .red).pngData()!
+        loader.completeImageLoading(with: oldImageData, at: 0)
+        let currentView = try XCTUnwrap(sut.simulateFeedImageViewVisible(at: 0))
+        
+        XCTAssertNotIdentical(oldView, currentView)
+        
+        oldView.prepareForReuse()
+        let newImageData = UIImage.make(withColor: .green).pngData()!
+        loader.completeImageLoading(with: newImageData, at: 1)
+        
+        XCTAssertEqual(currentView.renderedImage, newImageData, "Expected rendered image when image loading completes successfully")
+    }
+    
     func test_feedImageView_doesNotRenderLoadedImageWhenNotVisiableAnynore() {
         let (sut, loader) = makeSUT()
         sut.loadViewIfNeeded()
