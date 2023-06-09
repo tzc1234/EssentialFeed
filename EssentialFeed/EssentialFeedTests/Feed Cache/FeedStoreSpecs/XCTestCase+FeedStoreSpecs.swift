@@ -87,54 +87,24 @@ extension FeedStoreSpecs where Self: XCTestCase {
         expect(sut, toRetrieve: .success(.none), file: file, line: line)
     }
     
-    func assertThatSideEffectsRunSerially(on sut: FeedStore, file: StaticString = #file, line: UInt = #line) {
-        var completedOperationsInOrder = [XCTestExpectation]()
-        
-        let op1 = expectation(description: "Operation 1")
-        sut.insert(uniqueImageFeed().locals, timestamp: Date()) { _ in
-            completedOperationsInOrder.append(op1)
-            op1.fulfill()
-        }
-        
-        let op2 = expectation(description: "Operation 2")
-        sut.deleteCachedFeed { _ in
-            completedOperationsInOrder.append(op2)
-            op2.fulfill()
-        }
-        
-        let op3 = expectation(description: "Operation 3")
-        sut.insert(uniqueImageFeed().locals, timestamp: Date()) { _ in
-            completedOperationsInOrder.append(op3)
-            op3.fulfill()
-        }
-        
-        waitForExpectations(timeout: 5.0)
-        
-        XCTAssertEqual(completedOperationsInOrder, [op1, op2, op3], "Expected side-effects to run serially but operations finished in the wrong order", file: file, line: line)
-    }
-    
     @discardableResult
     func insert(_ cache: (feed: [LocalFeedImage], timestamp: Date), to sut: FeedStore) -> Error? {
-        let exp = expectation(description: "Wait for cache retrieval")
-        var insertionError: Error?
-        sut.insert(cache.feed, timestamp: cache.timestamp) { result in
-            if case let .failure(error) = result { insertionError = error }
-            exp.fulfill()
+        do {
+            try sut.insert(cache.feed, timestamp: cache.timestamp)
+            return nil
+        } catch {
+            return error
         }
-        wait(for: [exp], timeout: 1)
-        return insertionError
     }
     
     @discardableResult
     func deleteCache(from sut: FeedStore) -> Error? {
-        let exp = expectation(description: "Wait for deletion")
-        var deleteError: Error?
-        sut.deleteCachedFeed { result in
-            if case let .failure(error) = result { deleteError = error }
-            exp.fulfill()
+        do {
+            try sut.deleteCachedFeed()
+            return nil
+        } catch {
+            return error
         }
-        wait(for: [exp], timeout: 3)
-        return deleteError
     }
     
     func expect(_ sut: FeedStore, toRetrieveTwice expectedResult: FeedStore.RetrievalResult, file: StaticString = #filePath, line: UInt = #line) {
@@ -143,22 +113,16 @@ extension FeedStoreSpecs where Self: XCTestCase {
     }
     
     func expect(_ sut: FeedStore, toRetrieve expectedResult: FeedStore.RetrievalResult, file: StaticString = #filePath, line: UInt = #line) {
-        let exp = expectation(description: "Wait for cache retrieval")
+        let retrievedResult = Result { try sut.retrieve() }
         
-        sut.retrieve { retrievedResult in
-            switch (retrievedResult, expectedResult) {
-            case (.success(.none), .success(.none)), (.failure, .failure):
-                break
-            case let (.success(.some(retrieved)), .success(.some(expected))):
-                XCTAssertEqual(retrieved.feed, expected.feed, file: file, line: line)
-                XCTAssertEqual(retrieved.timestamp, expected.timestamp, file: file, line: line)
-            default:
-                XCTFail("Expect to retrieve \(expectedResult), got \(retrievedResult)", file: file, line: line)
-            }
-            
-            exp.fulfill()
+        switch (retrievedResult, expectedResult) {
+        case (.success(.none), .success(.none)), (.failure, .failure):
+            break
+        case let (.success(.some(retrieved)), .success(.some(expected))):
+            XCTAssertEqual(retrieved.feed, expected.feed, file: file, line: line)
+            XCTAssertEqual(retrieved.timestamp, expected.timestamp, file: file, line: line)
+        default:
+            XCTFail("Expect to retrieve \(expectedResult), got \(retrievedResult)", file: file, line: line)
         }
-        
-        wait(for: [exp], timeout: 1)
     }
 }
