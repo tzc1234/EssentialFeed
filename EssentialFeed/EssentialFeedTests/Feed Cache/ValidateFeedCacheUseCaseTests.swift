@@ -18,18 +18,18 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
     
     func test_validateCache_deleteOnRetrievalError() {
         let (sut, store) = makeSUT()
+        store.completeRetrieval(with: anyNSError())
         
         sut.validateCache() { _ in }
-        store.completeRetrieval(with: anyNSError())
         
         XCTAssertEqual(store.receivedMessages, [.retrieve, .deleteCachedFeed])
     }
     
     func test_validateCache_doesNotDeleteCacheOnEmptyCache() {
         let (sut, store) = makeSUT()
+        store.completeRetrievalWithEmptyCache()
         
         sut.validateCache() { _ in }
-        store.completeRetrievalWithEmptyCache()
         
         XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
@@ -39,9 +39,9 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
         let fixedCurrentDate = Date()
         let nonExpiredTimestamp = fixedCurrentDate.minusFeedCacheaMaxAge().adding(seconds: 1)
         let (sut, store) = makeSUT(currentDate: { fixedCurrentDate })
+        store.completeRetrieval(with: feed.locals, timestamp: nonExpiredTimestamp)
         
         sut.validateCache() { _ in }
-        store.completeRetrieval(with: feed.locals, timestamp: nonExpiredTimestamp)
         
         XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
@@ -51,9 +51,9 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
         let fixedCurrentDate = Date()
         let expirationTimestamp = fixedCurrentDate.minusFeedCacheaMaxAge()
         let (sut, store) = makeSUT(currentDate: { fixedCurrentDate })
+        store.completeRetrieval(with: feed.locals, timestamp: expirationTimestamp)
         
         sut.validateCache() { _ in }
-        store.completeRetrieval(with: feed.locals, timestamp: expirationTimestamp)
         
         XCTAssertEqual(store.receivedMessages, [.retrieve, .deleteCachedFeed])
     }
@@ -63,9 +63,9 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
         let fixedCurrentDate = Date()
         let expiredTimestamp = fixedCurrentDate.minusFeedCacheaMaxAge().adding(seconds: -1)
         let (sut, store) = makeSUT(currentDate: { fixedCurrentDate })
+        store.completeRetrieval(with: feed.locals, timestamp: expiredTimestamp)
         
         sut.validateCache() { _ in }
-        store.completeRetrieval(with: feed.locals, timestamp: expiredTimestamp)
         
         XCTAssertEqual(store.receivedMessages, [.retrieve, .deleteCachedFeed])
     }
@@ -135,17 +135,6 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
         }
     }
     
-    func test_validateCache_doesNotDeleteInvalidCacheAfterSUTInstanceHasBeenDeallocated() {
-        let store = FeedStoreSpy()
-        var sut: LocalFeedLoader? = LocalFeedLoader(store: store, currentDate: Date.init)
-        
-        sut?.validateCache() { _ in }
-        sut = nil
-        store.completeRetrieval(with: anyNSError())
-        
-        XCTAssertEqual(store.receivedMessages, [.retrieve])
-    }
-    
     // MARK: - Helpers
     
     private func makeSUT(
@@ -166,6 +155,7 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
                         file: StaticString = #filePath,
                         line: UInt = #line) {
         let exp = expectation(description: "Wait for load completion")
+        action()
         
         sut.validateCache { receivedResult in
             switch (receivedResult, expectedResult) {
@@ -179,7 +169,6 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
             exp.fulfill()
         }
         
-        action()
         wait(for: [exp], timeout: 1)
     }
     
